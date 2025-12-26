@@ -12,4 +12,10 @@ Setup
 - https://www.freertos.org/Community/Blogs/2021/using-visual-studio-code-for-freertos-development
 - The first thing you will want to do is update the intelliSenseMode variable to be gcc-arm and provide your cross compiler in the compilerPath variable.
 - Copy the INCLUDE list from the STM32CubeMX generated Makefile this into the includePath array in the c_cpp_properties.json file. Prefix each folder location with $  {workspaceFolder}
-3) 
+3) Download arm-none-eabi-gcc
+- Add the path to arm-none-eabi-gcc in c_cpp_properties.json
+- Add the path to arm-none-eabi-gcc to your path: export PATH="<path_to_gcc>:$PATH"
+```
+export PATH="/opt/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
+arm-none-eabi-gcc --version
+```
