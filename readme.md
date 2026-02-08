@@ -35,7 +35,7 @@ Connecting USB Devices to WSL
 - `usbipd bind --busid 3-1`
 - `usbipd attach --wsl --busid <busid>`
 - ![alt text](image-1.png)
-3) You should be able to see the STLink in wsl
+3) You should be able to see the STLink in wsl - lsusb
 - ![alt text](image.png)
 4) Create udev rules for STLink permissions
 - `sudo vim /etc/udev/rules.d/49-stlink.rules`
@@ -60,3 +60,15 @@ Running and Debugging
 1) Go to Arm Cortex tools extension -> Choose create launch.json file
 2) Choose STM32Cube: STLink GDB Server when prompted
 - A launch.json file will be created
+
+
+Settings up PWM using STM32CubeMX
+- https://controllerstech.com/pwm-in-stm32/
+- Tips:
+  - Must enable RCC HSE source in order to use external oscillator for frequencies up to 72MHz
+  - ![alt text](image-3.png)
+  - Clock settings
+  - ![alt text](image-4.png)
+  - Then set timer settings
+  - ![alt text](image-5.png)
+  - formula for PWM: f_pwm = (f_timer) / [(PSC + 1)(ARR + 1)] = (72 MHz) / [(72 - 1 + 1)(100 - 1 + 1)] = 100 KHz
