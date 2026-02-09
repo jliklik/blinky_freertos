@@ -76,4 +76,8 @@ Settings up PWM using STM32CubeMX
   - ![alt text](image-4.png)
   - Then set timer settings
   - ![alt text](image-5.png)
-  - formula for PWM: f_pwm = (f_timer) / [(PSC + 1)(ARR + 1)] = (72 MHz) / [(72 - 1 + 1)(100 - 1 + 1)] = 100 KHz
+  - Set pulse value to 50 (when counte reaches pulse value, it will turn on)
+  - formula for PWM: 
+    f_pwm = (f_timer) / [(PSC + 1)(ARR + 1)] = (72 MHz) / [(72 - 1 + 1)(100 - 1 + 1)] = 100 KHz
+  - duty cycle
+    d = CCR / (ARR + 1) = 50  / (100 - 1 + 1)

@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2025 STMicroelectronics.
+ * Copyright (c) 2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -58,12 +58,7 @@ const osThreadAttr_t blink_attributes = {
     .priority = (osPriority_t)osPriorityHigh,
 };
 /* USER CODE BEGIN PV */
-osThreadId_t pwmHandle;
-const osThreadAttr_t pwm_attributes = {
-    .name = "pwm",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityHigh,
-};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +69,7 @@ void StartDefaultTask(void *argument);
 void StartTask02(void *argument);
 
 /* USER CODE BEGIN PFP */
-void PwmTask(void *argument);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -145,7 +140,6 @@ int main(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  pwmHandle = osThreadNew(PwmTask, NULL, &pwm_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -235,7 +229,7 @@ static void MX_TIM2_Init(void) {
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 50;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
@@ -279,9 +273,6 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-void PwmTask(void *argument) {
-  // TODO:
-}
 
 /* USER CODE END 4 */
 
@@ -312,11 +303,7 @@ void StartTask02(void *argument) {
   /* USER CODE BEGIN StartTask02 */
   /* Infinite loop */
   for (;;) {
-    // TODO: fill in blink function
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-    osDelay(1000); // Freertos tick rate is 1000Hz
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-    osDelay(1000);
+    osDelay(1);
   }
   /* USER CODE END StartTask02 */
 }
