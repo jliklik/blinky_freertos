@@ -12,6 +12,12 @@ Setup and Project Creation in WSL
 4) Use the STM32Cube extension to create a new project with STM32CubeMX.
 - Include FreeRTOS as middleware
 - Select CMake as the toolchain
+- Need to enable SWD peripheral in STM32CubeMX or else you won't be able to program it after...
+  - https://www.reddit.com/r/stm32/comments/1ktbct6/seem_to_have_bricked_my_stmf103rct6_using_cubeide/
+  - https://deepbluembedded.com/stm32-debugging-with-st-link-v2-swd-serial-wire-viewer/ 
+  - ![alt text](image-7.png)
+  - SWD - basic debugging
+  - SWO - async, allows tracing as well
 5) Download arm-none-eabi-gcc
 - Add the path to arm-none-eabi-gcc to your path: export PATH="<path_to_gcc>:$PATH"
 6) Update .vscode/c_cpp_properties.json file
@@ -60,7 +66,6 @@ Running and Debugging
 1) Go to Arm Cortex tools extension -> Choose create launch.json file
 2) Choose STM32Cube: STLink GDB Server when prompted
 - A launch.json file will be created
-
 
 Settings up PWM using STM32CubeMX
 - https://controllerstech.com/pwm-in-stm32/
