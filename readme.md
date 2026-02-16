@@ -12,6 +12,12 @@ Setup and Project Creation in WSL
 4) Use the STM32Cube extension to create a new project with STM32CubeMX.
 - Include FreeRTOS as middleware
 - Select CMake as the toolchain
+- Need to enable SWD peripheral in STM32CubeMX or else you won't be able to program it after...
+  - https://www.reddit.com/r/stm32/comments/1ktbct6/seem_to_have_bricked_my_stmf103rct6_using_cubeide/
+  - https://deepbluembedded.com/stm32-debugging-with-st-link-v2-swd-serial-wire-viewer/ 
+  - ![alt text](image-7.png)
+  - SWD - basic debugging
+  - SWO - async, allows tracing as well
 5) Download arm-none-eabi-gcc
 - Add the path to arm-none-eabi-gcc to your path: export PATH="<path_to_gcc>:$PATH"
 6) Update .vscode/c_cpp_properties.json file
@@ -35,7 +41,7 @@ Connecting USB Devices to WSL
 - `usbipd bind --busid 3-1`
 - `usbipd attach --wsl --busid <busid>`
 - ![alt text](image-1.png)
-3) You should be able to see the STLink in wsl
+3) You should be able to see the STLink in wsl - lsusb
 - ![alt text](image.png)
 4) Create udev rules for STLink permissions
 - `sudo vim /etc/udev/rules.d/49-stlink.rules`
@@ -60,3 +66,27 @@ Running and Debugging
 1) Go to Arm Cortex tools extension -> Choose create launch.json file
 2) Choose STM32Cube: STLink GDB Server when prompted
 - A launch.json file will be created
+
+Settings up PWM using STM32CubeMX
+- https://controllerstech.com/pwm-in-stm32/
+- Tips:
+  - Must enable RCC HSE source in order to use external oscillator for frequencies up to 72MHz
+  - ![alt text](image-3.png)
+  - Clock settings
+  - ![alt text](image-4.png)
+  - Then set timer settings
+  - ![alt text](image-5.png)
+  - Set pulse value to 50 (when counte reaches pulse value, it will turn on)
+  - formula for PWM: 
+    f_pwm = (f_timer) / [(PSC + 1)(ARR + 1)] = (72 MHz) / [(72 - 1 + 1)(100 - 1 + 1)] = 100 KHz
+  - duty cycle
+    d = CCR / (ARR + 1) = 50  / (100 - 1 + 1)
+
+Must start the timer as well:
+  - https://www.waveshare.com/wiki/STM32CubeMX_Tutorial_Series:_PWM
+  - `HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3)`
+
+
+If the program gets stuck at: __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
+  - https://community.st.com/t5/stm32-mcus-products/hal-delay-stuck-systick-not-triggered-workaround-for-stm32f105/td-p/585510
+  - uncomment the line that defines USER_VECT_TAB_ADDRESS
