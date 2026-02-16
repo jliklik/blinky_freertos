@@ -81,3 +81,7 @@ Settings up PWM using STM32CubeMX
     f_pwm = (f_timer) / [(PSC + 1)(ARR + 1)] = (72 MHz) / [(72 - 1 + 1)(100 - 1 + 1)] = 100 KHz
   - duty cycle
     d = CCR / (ARR + 1) = 50  / (100 - 1 + 1)
+
+  If the program gets stuck at: __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
+  - https://community.st.com/t5/stm32-mcus-products/hal-delay-stuck-systick-not-triggered-workaround-for-stm32f105/td-p/585510
+  - uncomment the line that defines USER_VECT_TAB_ADDRESS
